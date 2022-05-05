@@ -9,8 +9,9 @@
 {{.Status}}
 {{end}}
 {{if .Link}}
-Сокращённая ссылка (
-{{.Link}}) <input type="url" value="http://localhost:10000/{{.Short}}">
+<br>
+Сокращённая ссылка:
+<a href="http://{{.Host}}:{{.Port}}/to/{{.Short}}">"http://{{.Host}}:{{.Port}}/to/{{.Short}}"</a>
 {{else}}
 <br>
 <form action="/" name=f method="POST">

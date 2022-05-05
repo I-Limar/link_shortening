@@ -12,14 +12,15 @@ import (
 
 type Config struct {
 	DB       db.DBConfig
-	HTTPPort int `envconfig:"http_port" required:"true"`
+	HTTPPort int    `envconfig:"http_port" required:"true"`
+	Host     string `required:"true"`
 }
 
 func NewApp(cfg *Config) (http.Handler, error) {
 
 	dbService, err := db.NewDBService(cfg.DB)
 
-	gateWeb := annexBuild(&dbService)
+	gateWeb := annexBuild(&dbService, cfg.Host, cfg.HTTPPort)
 
 	if err != nil {
 		return nil, fmt.Errorf("create connection to DB: %v", err)
@@ -32,12 +33,12 @@ func NewApp(cfg *Config) (http.Handler, error) {
 	return serverMux, nil
 }
 
-func annexBuild(dbService *db.DBService) *geteways.GateWeb {
+func annexBuild(dbService *db.DBService, host string, port int) *geteways.GateWeb {
 	// create repositories
 	linkRepo := repositories.NewLinksRepo(dbService)
 
 	// create interactor
-	linksInteract := usecases.NewLinksInteractor(linkRepo)
+	linksInteract := usecases.NewLinksInteractor(linkRepo, host, port)
 
 	getWeb := geteways.NewGateWeb(linksInteract)
 
