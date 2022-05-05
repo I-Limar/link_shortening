@@ -1,8 +1,9 @@
 package usecases
 
 import (
+	"crypto/md5"
+	"fmt"
 	"github.com/I-Limar/link_shortening/app/domain"
-	"math/rand"
 )
 
 type LinksInteractor struct {
@@ -48,12 +49,9 @@ func (l LinksInteractor) SetLink(req *Link) error {
 	return err
 }
 
-func (l LinksInteractor) Shorting() string {
-	b := make([]byte, 5)
-	for i := range b {
-		b[i] = letterBytes[rand.Intn(len(letterBytes))]
-	}
-	return string(b)
+func (l LinksInteractor) Shorting(data string) string {
+	h := md5.Sum([]byte(data))
+	return fmt.Sprintf("%x", h)
 }
 
 func (l LinksInteractor) DefaultLink() *Link {

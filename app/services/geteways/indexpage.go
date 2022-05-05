@@ -19,10 +19,11 @@ func (g *GateWeb) IndexPage(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "POST" {
 		if !validators.IsValidUrl(r.FormValue("s")) {
-			link.Status = "Ссылка имеет неправильный формат!"
+			link.Status = "Неправильный формат ссылки"
 		} else {
+			//TODO тут нужна проверка на существование ссылки, если уже есть вернуть ее
 			link.Link = r.FormValue("s")
-			link.Short = g.links.Shorting()
+			link.Short = g.links.Shorting(link.Link)
 			err := g.links.SetLink(link)
 
 			if err != nil {
