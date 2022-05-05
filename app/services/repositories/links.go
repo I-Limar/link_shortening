@@ -27,7 +27,6 @@ func (r *LinksRepo) GetItem(req *domain.Link) (*domain.Link, error) {
 
 func (r *LinksRepo) SetItem(req *domain.Link) error {
 	querySource := r.makeQuerySource()
-
 	err := r.executor.SetRow("setlink", querySource, req.Link, req.Short)
 
 	return err

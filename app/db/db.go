@@ -20,8 +20,6 @@ type DBService struct {
 	connection *sql.DB
 }
 
-// HTTP_PORT=10000;DB_HOST=localhost;DB_PORT=54320;DB_USER=selectel;DB_PASSWORD=selectel;DB_DBNAME=DB_HOST=selectel
-
 // DBConfig represent a config required to connect to database
 type DBConfig struct {
 	Host     string `required:"true"`
@@ -63,6 +61,7 @@ func (e *Executor) GetRow(resp interface{}, name string, source interface{}, Arg
 		return fmt.Errorf("sql template: %w", err)
 	}
 	row := e.db.connection.QueryRow(b.String(), Args...)
+
 	err := row.Scan(resp)
 	if err != nil {
 		return fmt.Errorf("error: sql: %w", err)
@@ -73,6 +72,7 @@ func (e *Executor) GetRow(resp interface{}, name string, source interface{}, Arg
 
 func (e *Executor) SetRow(name string, source interface{}, Args ...interface{}) error {
 	b := bytes.NewBuffer(nil)
+
 	if err := e.template.ExecuteTemplate(b, name, source); err != nil {
 		return fmt.Errorf("sql template: %w", err)
 	}

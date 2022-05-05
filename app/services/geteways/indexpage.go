@@ -34,6 +34,7 @@ func (g *GateWeb) IndexPage(w http.ResponseWriter, r *http.Request) {
 			link.Status = "Сокращение было выполнено успешно."
 		}
 	}
+
 	err = templ.Execute(w, link)
 	if err != nil {
 		logrus.Error(err)

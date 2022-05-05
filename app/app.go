@@ -17,9 +17,7 @@ type Config struct {
 }
 
 func NewApp(cfg *Config) (http.Handler, error) {
-
 	dbService, err := db.NewDBService(cfg.DB)
-
 	gateWeb := annexBuild(&dbService, cfg.Host, cfg.HTTPPort)
 
 	if err != nil {

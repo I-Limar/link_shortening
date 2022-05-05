@@ -10,7 +10,6 @@ import (
 )
 
 func main() {
-
 	var conf app.Config
 
 	envconfig.MustProcess("", &conf)

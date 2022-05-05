@@ -12,8 +12,6 @@ type LinksInteractor struct {
 	port int
 }
 
-const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
 type Link struct {
 	Short  string
 	Link   string
